@@ -3,12 +3,15 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import Home from './src/screens/Home';
 import { store } from './src/redux/store';
 import { Provider } from 'react-redux';
+import SignIn from './src/screens/SignIn';
 
 export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
-        <Home message="Hello world asd" />
+        {/* <Home message="Hello world asd" /> */}
+        <SignIn />
+
         <StatusBar style="auto" />
       </SafeAreaView>
     </Provider>
