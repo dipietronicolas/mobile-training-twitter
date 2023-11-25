@@ -2,34 +2,33 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
 import { Formik } from 'formik';
 import FormInput from '../common/FormikComponents/FormikInput/FormikInput';
 import FormikButton from '../common/FormikComponents/FormikButton/FormikButton';
-import * as Yup from 'yup';
-
-const SignupSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-  username: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Required'),
-  password: Yup.string()
-    .min(8, 'Password must be at least 8 characters')
-    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g, 'Password must contain at least one uppercase letter and one number or symbol')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match')
-    .required('Please confirm your password'),
-});
+import SigninSchema from './formik.config';
+import useAuth from '../../hooks/useAuth';
 
 const SignInForm = () => {
+
+  const {
+    createUserLoading,
+    createUserErrorMessage,
+    isAuthenticated,
+    createUser,
+  } = useAuth();
+
+  const renderErrorMessage = () => {
+    if (createUserErrorMessage && createUserLoading) {
+      return (
+        <View>
+          <Text style={Styles.errorMessage}>{createUserErrorMessage}</Text>
+        </View>
+      )
+    }
+  }
+
   return (
     <Formik
       initialValues={{
@@ -39,8 +38,11 @@ const SignInForm = () => {
         password: '',
         confirmPassword: '',
       }}
-      validationSchema={SignupSchema}
-      onSubmit={values => console.log(values)}
+      validationSchema={SigninSchema}
+      onSubmit={values => {
+        const { confirmPassword, ...rest } = values;
+        createUser(rest);
+      }}
     >
       {({
         handleChange,
@@ -50,7 +52,6 @@ const SignInForm = () => {
         errors,
         touched,
         isValid,
-        ...props
       }) => {
         return (
           <View style={Styles.mainContainer}>
@@ -93,6 +94,7 @@ const SignInForm = () => {
               errorMessage={errors.password}
               touched={touched.password}
               placeholder={'Placeholder text'}
+              isPasswordInput
             />
             <FormInput
               handleChange={handleChange}
@@ -103,12 +105,17 @@ const SignInForm = () => {
               errorMessage={errors.confirmPassword}
               touched={touched.confirmPassword}
               placeholder={'Placeholder text'}
+              isPasswordInput
             />
+            {
+              renderErrorMessage()
+            }
             <View style={Styles.buttonsContainer}>
               <FormikButton
                 onPress={handleSubmit}
                 label="Submit"
                 disabled={!isValid}
+                isLoading={createUserLoading.loading}
                 isDarkButton
               />
               <FormikButton
@@ -151,5 +158,8 @@ const Styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  errorMessage: {
+    color: '#E03C39',
   }
 })

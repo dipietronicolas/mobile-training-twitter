@@ -13,6 +13,7 @@ interface IFormikInput {
   name: string;
   errorMessage?: string;
   touched?: boolean;
+  isPasswordInput?: boolean;
   label?: string;
   placeholder?: string;
   style?: any;
@@ -25,6 +26,7 @@ const FormInput = ({
   name,
   errorMessage = '',
   touched = false,
+  isPasswordInput = false,
   label,
   placeholder,
   style,
@@ -51,6 +53,8 @@ const FormInput = ({
           value={value}
           placeholder={placeholder}
           style={[Styles.textInput, style]}
+          secureTextEntry={isPasswordInput}
+          autoCapitalize='none'
         />
       </View>
       {isError && (
@@ -93,11 +97,9 @@ const CreateStyles = (isOnFocus: boolean, error: boolean) => {
     },
     textInput: {
       fontFamily: 'Manrope',
-      color: getColor('#566370'),
+      color: '#566370',
       fontSize: 15,
       lineHeight: 17,
-      outlineStyle: 'none',
-      border: 'none',
     },
     errorMessage: {
       color: '#E03C39',

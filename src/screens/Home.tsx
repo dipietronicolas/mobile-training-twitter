@@ -23,9 +23,11 @@ export default Home;
 
 const Styles = StyleSheet.create({
   mainContainer: {
-    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: '#FFF',
   },
   counterContainer: {
     height: '40%',

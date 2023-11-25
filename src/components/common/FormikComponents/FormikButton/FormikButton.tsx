@@ -1,11 +1,13 @@
 import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Spinner from '../../Spinner/Spinner';
 
 interface IFormikButton {
   onPress: (e: any) => any;
   label: string;
   isDarkButton?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const FormikButton = ({
@@ -13,6 +15,7 @@ const FormikButton = ({
   label,
   isDarkButton = false,
   disabled = true,
+  isLoading = false,
 }: IFormikButton) => {
 
   const Styles = CreateStyles(isDarkButton);
@@ -21,11 +24,16 @@ const FormikButton = ({
     <TouchableOpacity
       onPress={(e: any) => onPress(e)}
       style={Styles.button}
-      disabled={disabled}
+      disabled={disabled || isLoading}
     >
-      <Text style={Styles.buttonLabel}>
-        {label}
-      </Text>
+      {isLoading
+        ? <Spinner />
+        : (
+          <Text style={Styles.buttonLabel}>
+            {label}
+          </Text>
+        )
+      }
     </TouchableOpacity>
   )
 }
@@ -49,7 +57,7 @@ const CreateStyles = (isDarkButton: boolean) => {
     },
     buttonLabel: {
       color: isDarkButton ? '#FFF' : '#000',
-      fontFfamily: 'Manrope',
+      fontFamily: 'Manrope',
       fontSize: 15,
       fontWeight: '800',
       lineHeight: 17,
