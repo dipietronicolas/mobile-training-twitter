@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import { PostUser } from '../utils/types';
-import authenticationActions from '../redux/authentication/authentication.actions';
+import { authenticationActions } from '../redux/authentication/authentication.slice';
 
 const useAuth = () => {
 
@@ -14,9 +14,15 @@ const useAuth = () => {
   const createUserLoading = useSelector((state: RootState) => state.authentication.createUserLoading);
   const createUserErrorMessage = useSelector((state: RootState) => state.authentication.createUserErrorMessage);
 
+  const signInErrorMessage = useSelector((state: RootState) => state.authentication.signInErrorMessage);
+  const signInLoading = useSelector((state: RootState) => state.authentication.signInLoading);
+
   const getUsersList = () => dispatch(authenticationActions.getUsersAsync());
   const createUser = (user: PostUser) => dispatch(authenticationActions.createUserAsync(user));
+  const signIn = (user: Pick<PostUser, 'username' | 'password'>) => 
+    dispatch(authenticationActions.singInAsync(user));
 
+  const resetAuthenticationState = () => dispatch(authenticationActions.resetState());
 
   return {
     usersList,
@@ -24,8 +30,12 @@ const useAuth = () => {
     createUserLoading,
     createUserErrorMessage,
     isAuthenticated,
+    signInErrorMessage,
+    signInLoading,
     getUsersList,
     createUser,
+    signIn,
+    resetAuthenticationState,
   }
 }
 

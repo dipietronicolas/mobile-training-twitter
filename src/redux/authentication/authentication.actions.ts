@@ -1,5 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { createUser, getUsers } from './authentication.services';
+import {
+  createUser,
+  getUsers,
+  singIn,
+} from './authentication.services';
 
 export const getUsersAsync = createAsyncThunk(
   'users/getUsersAsync',
@@ -11,9 +15,8 @@ export const createUserAsync = createAsyncThunk(
   createUser
 )
 
-const authenticationActions = {
-  getUsersAsync,
-  createUserAsync
-}
+export const singInAsync = createAsyncThunk(
+  'singIn/singInAsync',
+  singIn
+)
 
-export default authenticationActions;

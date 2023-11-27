@@ -1,3 +1,12 @@
+export enum ROUTER_SCREEN_NAMES {
+  HOME = 'HOME',
+  SIGNIN = 'SIGNIN',
+  LOGIN = 'LOGIN',
+  MESSAGE = 'MESSAGE',
+  SEARCH = 'SEARCH',
+  PROFILE = 'PROFILE',
+}
+
 export const LOADING_STATE = {
   LOADING: {
     loading: true,

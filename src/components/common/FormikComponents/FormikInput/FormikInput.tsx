@@ -100,6 +100,7 @@ const CreateStyles = (isOnFocus: boolean, error: boolean) => {
       color: '#566370',
       fontSize: 15,
       lineHeight: 17,
+      height: 24,
     },
     errorMessage: {
       color: '#E03C39',

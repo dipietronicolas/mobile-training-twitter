@@ -7,29 +7,29 @@ import {
 import { Formik } from 'formik';
 import FormInput from '../common/FormikComponents/FormikInput/FormikInput';
 import FormikButton from '../common/FormikComponents/FormikButton/FormikButton';
-import SigninSchema from './formik.config';
+import LoginSchema from './formik.config';
 import { PostUser } from '../../utils/types';
 
-interface ISignUpForm {
+interface ILoginInForm {
   errorMessage: string;
   isLoading: boolean;
-  signUp: (user: Omit<PostUser, 'id'>) => void;
+  signIn: (user: Pick<PostUser, 'username' | 'password'>) => void;
   secondaryCTA: () => void;
 }
 
-const SignUpForm = ({
+const LogInForm = ({
   errorMessage,
   isLoading,
-  signUp,
+  signIn,
   secondaryCTA,
-}: ISignUpForm) => {
+}: ILoginInForm) => {
 
   const renderErrorMessage = () => {
     if (errorMessage) {
       return (
-        <View>
-          <Text style={Styles.errorMessage}>{errorMessage}</Text>
-        </View>
+        <Text style={Styles.errorMessage}>
+          {errorMessage}
+        </Text>
       )
     }
   }
@@ -37,16 +37,12 @@ const SignUpForm = ({
   return (
     <Formik
       initialValues={{
-        name: '',
         username: '',
-        email: '',
         password: '',
-        confirmPassword: '',
       }}
-      validationSchema={SigninSchema}
+      validationSchema={LoginSchema}
       onSubmit={values => {
-        const { confirmPassword, ...rest } = values;
-        signUp(rest);
+        signIn(values);
       }}
     >
       {({
@@ -63,31 +59,11 @@ const SignUpForm = ({
             <FormInput
               handleChange={handleChange}
               handleBlur={handleBlur}
-              value={values.name}
-              name={'name'}
-              label={'Name'}
-              errorMessage={errors.name}
-              touched={touched.name}
-              placeholder={'Placeholder text'}
-            />
-            <FormInput
-              handleChange={handleChange}
-              handleBlur={handleBlur}
               value={values.username}
               name={'username'}
               label={'Username'}
               errorMessage={errors.username}
               touched={touched.username}
-              placeholder={'Placeholder text'}
-            />
-            <FormInput
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              value={values.email}
-              name={'email'}
-              label={'Email'}
-              errorMessage={errors.email}
-              touched={touched.email}
               placeholder={'Placeholder text'}
             />
             <FormInput
@@ -101,31 +77,20 @@ const SignUpForm = ({
               placeholder={'Placeholder text'}
               isPasswordInput
             />
-            <FormInput
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              value={values.confirmPassword}
-              name={'confirmPassword'}
-              label={'Confirm password'}
-              errorMessage={errors.confirmPassword}
-              touched={touched.confirmPassword}
-              placeholder={'Placeholder text'}
-              isPasswordInput
-            />
             {
               renderErrorMessage()
             }
             <View style={Styles.buttonsContainer}>
               <FormikButton
                 onPress={handleSubmit}
-                label="Submit"
+                label="Login"
                 disabled={!isValid}
                 isLoading={isLoading}
                 isDarkButton
               />
               <FormikButton
                 onPress={secondaryCTA}
-                label="Log in"
+                label="Register"
               />
             </View>
           </View>
@@ -135,7 +100,7 @@ const SignUpForm = ({
   )
 }
 
-export default SignUpForm;
+export default LogInForm;
 
 const Styles = StyleSheet.create({
   mainContainer: {

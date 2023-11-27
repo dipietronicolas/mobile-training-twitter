@@ -1,45 +1,47 @@
 import React from 'react';
 import SignInForm from '../components/SignInForm/SignInForm';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import CustomTitle from '../components/common/CustomTitle/CustomTitle';
 import TwitterLogo from '../../assets/Icons/TwitterLogo';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from '../routes/types.routes';
+import { ROUTER_SCREEN_NAMES } from '../utils/constants';
 
 const SignIn = () => {
 
   const {
-    getUsersList,
-    isAuthenticated,
-    usersList,
+    createUserLoading,
+    createUserErrorMessage,
+    createUser,
+    resetAuthenticationState,
   } = useAuth();
 
   const navigation = useNavigation<NavigationProps>();
-
-  React.useEffect(() => {
-    getUsersList();
-  }, []);
-
-  React.useEffect(() => {
-    if(isAuthenticated) {
-      navigation.navigate('Home')
-    }
-  }, [isAuthenticated])
-
-  console.log(usersList);
+  const handleSecondaryCTA = () => {
+    resetAuthenticationState();
+    navigation.navigate(ROUTER_SCREEN_NAMES.LOGIN);
+  }
 
   return (
     <View style={Styles.mainContainer}>
-      <View style={Styles.header}>
-        <View style={Styles.iconContainer}>
-          <TwitterLogo size={64} />
+      <ScrollView style={Styles.scrollView}>
+
+        <View style={Styles.header}>
+          <View style={Styles.iconContainer}>
+            <TwitterLogo size={64} />
+          </View>
+          <CustomTitle
+            label={'Create your account'}
+          />
         </View>
-        <CustomTitle
-          label={'Create your account'}
+        <SignInForm
+          errorMessage={createUserErrorMessage}
+          isLoading={createUserLoading.loading}
+          signUp={createUser}
+          secondaryCTA={handleSecondaryCTA}
         />
-      </View>
-      <SignInForm />
+      </ScrollView>
     </View>
   )
 }
@@ -55,6 +57,9 @@ const Styles = StyleSheet.create({
     padding: 48,
     backgroundColor: '#FFF',
   },
+  scrollView: {
+    flex: 1,
+  },
   header: {
     gap: 40,
   },
@@ -62,5 +67,4 @@ const Styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
-  
 })

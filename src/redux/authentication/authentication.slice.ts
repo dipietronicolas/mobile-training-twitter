@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LOADING_STATE } from '../../utils/constants';
 import { LoadingState } from '../../utils/types';
-import authenticationActions from './authentication.actions';
+import {
+  getUsersAsync,
+  createUserAsync,
+  singInAsync,
+} from './authentication.actions';
 
 export interface AuthenticationState {
   isAuthenticated: boolean;
+  signInLoading: LoadingState;
+  signInErrorMessage: string;
   createUserLoading: LoadingState;
   createUserErrorMessage: string;
   usersData: any[];
@@ -13,6 +19,8 @@ export interface AuthenticationState {
 
 const initialState: AuthenticationState = {
   isAuthenticated: false,
+  signInLoading: LOADING_STATE.NONE,
+  signInErrorMessage: '',
   createUserLoading: LOADING_STATE.NONE,
   createUserErrorMessage: '',
   usersData: [],
@@ -22,7 +30,15 @@ const initialState: AuthenticationState = {
 export const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState: (state) => {
+      state.signInErrorMessage = '';
+      state.createUserErrorMessage = '';
+      state.signInLoading = LOADING_STATE.NONE;
+      state.createUserLoading = LOADING_STATE.NONE;
+      state.getUsersDataLoading = LOADING_STATE.NONE;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(authenticationActions.getUsersAsync.pending, (state) => {
@@ -52,7 +68,32 @@ export const authenticationSlice = createSlice({
         state.isAuthenticated = false;
         state.createUserErrorMessage = action.payload.error
       })
+      .addCase(authenticationActions.singInAsync.pending, (state) => {
+        state.isAuthenticated = false;
+        state.signInErrorMessage = '';
+        state.signInLoading = LOADING_STATE.LOADING;
+      })
+      .addCase(authenticationActions.singInAsync.fulfilled, (state) => {
+        state.isAuthenticated = true;
+        state.signInErrorMessage = '';
+        state.signInLoading = LOADING_STATE.SUCCESS;
+      })
+      .addCase(authenticationActions.singInAsync.rejected, (state, action: any) => {
+        state.isAuthenticated = false;
+        state.signInErrorMessage = action.payload.error
+        state.signInLoading = LOADING_STATE.ERROR;
+      })
+
   }
 })
+
+export const { actions } = authenticationSlice;
+
+export const authenticationActions = {
+  getUsersAsync,
+  createUserAsync,
+  singInAsync,
+  ...actions,
+}
 
 export default authenticationSlice.reducer;

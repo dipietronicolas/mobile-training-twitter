@@ -14,7 +14,7 @@ const FormikButton = ({
   onPress,
   label,
   isDarkButton = false,
-  disabled = true,
+  disabled = false,
   isLoading = false,
 }: IFormikButton) => {
 
@@ -51,9 +51,9 @@ const CreateStyles = (isDarkButton: boolean) => {
       borderColor: '#D1D9DD',
       gap: 8,
       paddingTop: 8,
-      paddingRight: 80,
+      paddingRight: 40,
       paddingBottom: 8,
-      paddingLeft: 80,
+      paddingLeft: 40,
     },
     buttonLabel: {
       color: isDarkButton ? '#FFF' : '#000',
@@ -61,6 +61,7 @@ const CreateStyles = (isDarkButton: boolean) => {
       fontSize: 15,
       fontWeight: '800',
       lineHeight: 17,
+      textAlign: 'center',
     }
   })
 }
