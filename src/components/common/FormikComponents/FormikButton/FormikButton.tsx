@@ -57,9 +57,8 @@ const CreateStyles = (isDarkButton: boolean) => {
     },
     buttonLabel: {
       color: isDarkButton ? '#FFF' : '#000',
-      fontFamily: 'Manrope',
       fontSize: 15,
-      fontWeight: '800',
+      fontWeight: '500',
       lineHeight: 17,
       textAlign: 'center',
     }

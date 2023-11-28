@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from '../routes/types.routes';
 import { ROUTER_SCREEN_NAMES } from '../utils/constants';
 
-const SignIn = () => {
+const SignInScreen = () => {
 
   const {
     createUserLoading,
@@ -46,7 +46,7 @@ const SignIn = () => {
   )
 }
 
-export default SignIn;
+export default SignInScreen;
 
 const Styles = StyleSheet.create({
   mainContainer: {

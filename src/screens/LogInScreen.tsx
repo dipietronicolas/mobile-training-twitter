@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from '../routes/types.routes';
 import { ROUTER_SCREEN_NAMES } from '../utils/constants';
 
-const LogIn = () => {
+const LogInScreen = () => {
    
   const {
     signInErrorMessage,
@@ -43,7 +43,7 @@ const LogIn = () => {
   )
 }
 
-export default LogIn;
+export default LogInScreen;
 
 
 const Styles = StyleSheet.create({

@@ -1,4 +1,5 @@
 export enum ROUTER_SCREEN_NAMES {
+  MAIN_APP = 'MAIN_APP',
   HOME = 'HOME',
   SIGNIN = 'SIGNIN',
   LOGIN = 'LOGIN',

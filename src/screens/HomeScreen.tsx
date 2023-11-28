@@ -2,16 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Counter from '../components/Counter/Counter';
 
-interface IHome {
-  message: string;
-}
 
-const Home = ({
-  message
-}: IHome) => {
+const Home = () => {
   return (
     <View style={Styles.mainContainer}>
-      <Text>{message}</Text>
       <View style={Styles.counterContainer}>
         <Counter />
       </View>
