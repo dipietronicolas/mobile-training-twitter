@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LOADING_STATE, SECURE_STORE_KEYS } from '../../utils/constants';
+import { LOADING_STATE } from '../../utils/constants';
 import { LoadingState } from '../../utils/types';
 import {
   getUsersAsync,
   createUserAsync,
   singInAsync,
 } from './authentication.actions';
-import appUtils from '../../utils/utils';
 
 export interface AuthenticationState {
   isAuthenticated: boolean;
