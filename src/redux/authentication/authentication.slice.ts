@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LOADING_STATE } from '../../utils/constants';
+import { LOADING_STATE, SECURE_STORE_KEYS } from '../../utils/constants';
 import { LoadingState } from '../../utils/types';
 import {
   getUsersAsync,
   createUserAsync,
   singInAsync,
 } from './authentication.actions';
+import appUtils from '../../utils/utils';
 
 export interface AuthenticationState {
   isAuthenticated: boolean;
@@ -15,6 +16,8 @@ export interface AuthenticationState {
   createUserErrorMessage: string;
   usersData: any[];
   getUsersDataLoading: LoadingState;
+  currentUserData: any;
+  getCurrentUserDataLoading: LoadingState;
 }
 
 const initialState: AuthenticationState = {
@@ -25,6 +28,8 @@ const initialState: AuthenticationState = {
   createUserErrorMessage: '',
   usersData: [],
   getUsersDataLoading: LOADING_STATE.NONE,
+  currentUserData: {},
+  getCurrentUserDataLoading: LOADING_STATE.NONE
 }
 
 export const authenticationSlice = createSlice({
@@ -38,6 +43,13 @@ export const authenticationSlice = createSlice({
       state.createUserLoading = LOADING_STATE.NONE;
       state.getUsersDataLoading = LOADING_STATE.NONE;
     },
+    logout: (state) => {
+      state.isAuthenticated = false;
+    },
+    setCurrentUserData: (state, action) => {
+      state.currentUserData = action.payload;
+      state.isAuthenticated = true;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -73,10 +85,11 @@ export const authenticationSlice = createSlice({
         state.signInErrorMessage = '';
         state.signInLoading = LOADING_STATE.LOADING;
       })
-      .addCase(authenticationActions.singInAsync.fulfilled, (state) => {
+      .addCase(authenticationActions.singInAsync.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.signInErrorMessage = '';
         state.signInLoading = LOADING_STATE.SUCCESS;
+        state.currentUserData = action.payload.data
       })
       .addCase(authenticationActions.singInAsync.rejected, (state, action: any) => {
         state.isAuthenticated = false;

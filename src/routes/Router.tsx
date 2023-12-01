@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RootStackParamList, } from './types.routes';
-import { ROUTER_SCREEN_NAMES } from '../utils/constants';
+import { ROUTER_SCREEN_NAMES, SECURE_STORE_KEYS } from '../utils/constants';
 // Screens
 import LogInScreen from '../screens/LogInScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -20,7 +20,8 @@ import ProfileIcon from '../../assets/Icons/ProfileIcon';
 import MessageIcon from '../../assets/Icons/MessageIcon';
 //  Hooks
 import useAuth from '../hooks/useAuth';
-
+// Utils
+import appUtils from '../utils/utils';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -29,7 +30,17 @@ const Router = () => {
 
   const {
     isAuthenticated,
+    setCurrentUserData,
   } = useAuth();
+
+  React.useEffect(() => {
+    const myFunc = async () => {
+      const result = await appUtils.getSecureStoreValue(SECURE_STORE_KEYS.CURRENT_USER_DATA)
+      if(result)
+        setCurrentUserData(JSON.parse(result))
+    }
+    myFunc();
+  }, [])
 
   return (
     <NavigationContainer >

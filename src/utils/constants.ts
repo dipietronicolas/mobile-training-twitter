@@ -8,6 +8,15 @@ export enum ROUTER_SCREEN_NAMES {
   PROFILE = 'PROFILE',
 }
 
+export enum TWEET_TYPES {
+  ALL_TWEETS = 'ALL_TWEETS',
+  FOR_YOU_TWEETS = 'FOR_YOU_TWEETS',
+}
+
+export enum SECURE_STORE_KEYS {
+  CURRENT_USER_DATA = 'CURRENT_USER_DATA',
+}
+
 export const LOADING_STATE = {
   LOADING: {
     loading: true,

@@ -1,11 +1,19 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 
-const Spinner = () => {
+interface ISpinner {
+  size?: 'large' | 'small';
+  color?: string;
+}
+
+const Spinner = ({
+  size = 'small',
+  color = '#fff',
+}: ISpinner) => {
   return (
     <ActivityIndicator
-      size="small"
-      color="#fff"
+      size={size}
+      color={color}
     />
   )
 }

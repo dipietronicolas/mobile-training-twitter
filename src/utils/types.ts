@@ -13,3 +13,19 @@ export interface User {
 }
 
 export interface PostUser extends Omit<User, 'id'> {};
+
+export interface Tweet {
+  id: number,
+  userId: number,
+  text: string;
+  timestamp: string;
+  imageUrl: string;
+  likes: number;
+  user: {
+    id: number;
+    email: string
+    name: string
+    username: string;
+    imageUrl: string;
+  }
+}

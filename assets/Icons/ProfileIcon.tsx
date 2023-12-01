@@ -10,7 +10,7 @@ interface IProfileIcon {
 
 const ProfileIcon = ({
   size,
-  selected,
+  selected = false,
   color = '#000',
 }: IProfileIcon) => {
   return (

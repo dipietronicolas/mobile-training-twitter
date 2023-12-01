@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import { PostUser } from '../utils/types';
 import { authenticationActions } from '../redux/authentication/authentication.slice';
+import { tweetsActions } from '../redux/tweets/tweets.slice';
 
 const useAuth = () => {
 
@@ -19,10 +20,16 @@ const useAuth = () => {
 
   const getUsersList = () => dispatch(authenticationActions.getUsersAsync());
   const createUser = (user: PostUser) => dispatch(authenticationActions.createUserAsync(user));
-  const signIn = (user: Pick<PostUser, 'username' | 'password'>) => 
+  const signIn = (user: Pick<PostUser, 'username' | 'password'>) => {
+    dispatch(tweetsActions.resetState())
     dispatch(authenticationActions.singInAsync(user));
+  }
 
+  const logout = () => dispatch(authenticationActions.logout());
   const resetAuthenticationState = () => dispatch(authenticationActions.resetState());
+  const setCurrentUserData = (user: any) => {
+    dispatch(authenticationActions.setCurrentUserData(user))
+  }
 
   return {
     usersList,
@@ -36,6 +43,8 @@ const useAuth = () => {
     createUser,
     signIn,
     resetAuthenticationState,
+    logout,
+    setCurrentUserData,
   }
 }
 

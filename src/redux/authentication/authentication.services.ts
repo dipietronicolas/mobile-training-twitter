@@ -1,5 +1,7 @@
 import axios from "axios";
 import { PostUser } from "../../utils/types";
+import appUtils from "../../utils/utils";
+import { SECURE_STORE_KEYS } from "../../utils/constants";
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -25,9 +27,10 @@ export const singIn = async (
   thunkAPI: any
 ) => {
   try {
-    await axios.post(`${BASE_URL}/signin`, user);
+    const result = await axios.post(`${BASE_URL}/signin`, user);
+    appUtils.saveToSecureStore(SECURE_STORE_KEYS.CURRENT_USER_DATA, JSON.stringify(result.data))
     return {
-      data: true,
+      data: result.data,
     }
   } catch (error: any) {
     return thunkAPI.rejectWithValue({
@@ -39,7 +42,6 @@ export const singIn = async (
 export const getUsers = async () => {
   try {
     const results = await axios(`${BASE_URL}/users`);
-    // console.log(JSON.stringify(results.data, null, 3));
     return {
       data: results.data,
     }
