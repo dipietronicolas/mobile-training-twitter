@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   StyleSheet,
   View,
   useWindowDimensions,
@@ -8,6 +9,7 @@ import { TabView, TabBar, TabBarProps, SceneMap } from 'react-native-tab-view';
 import TwitterLogo from '../../assets/Icons/TwitterLogo';
 import TweetList from '../components/TweetList/TweetList';
 import { TWEET_TYPES } from '../utils/constants';
+import useAuth from '../hooks/useAuth';
 
 const scenes = SceneMap({
   first: () => <TweetList tweetType={TWEET_TYPES.FOR_YOU_TWEETS} />,
@@ -15,6 +17,10 @@ const scenes = SceneMap({
 })
 
 const Home = () => {
+
+  const {
+    currentUserData
+  } = useAuth();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -42,6 +48,12 @@ const Home = () => {
   return (
     <View style={Styles.mainContainer}>
       <View style={Styles.header}>
+        <Image
+          source={{
+            uri: currentUserData.imageUrl
+          }}
+          style={Styles.profilePic}
+        />
         <TwitterLogo
           size={36}
         />
@@ -68,5 +80,16 @@ const Styles = StyleSheet.create({
     height: 70,
     width: '100%',
     backgroundColor: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profilePic: {
+    position: 'absolute',
+    top: 19,
+    left: 16,
+    height: 32,
+    width: 32,
+    borderRadius: 100
   }
 })

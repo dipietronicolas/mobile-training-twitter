@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LOADING_STATE, SECURE_STORE_KEYS } from '../../utils/constants';
-import { LoadingState } from '../../utils/types';
+import { LoadingState, User } from '../../utils/types';
 import {
   getUsersAsync,
   createUserAsync,
@@ -16,7 +16,7 @@ export interface AuthenticationState {
   createUserErrorMessage: string;
   usersData: any[];
   getUsersDataLoading: LoadingState;
-  currentUserData: any;
+  currentUserData: Partial<User>;
   getCurrentUserDataLoading: LoadingState;
 }
 
@@ -97,7 +97,6 @@ export const authenticationSlice = createSlice({
         state.signInErrorMessage = action.payload.error
         state.signInLoading = LOADING_STATE.ERROR;
       })
-
   }
 })
 

@@ -18,6 +18,8 @@ const useAuth = () => {
   const signInErrorMessage = useSelector((state: RootState) => state.authentication.signInErrorMessage);
   const signInLoading = useSelector((state: RootState) => state.authentication.signInLoading);
 
+  const currentUserData = useSelector((state: RootState) => state.authentication.currentUserData)
+
   const getUsersList = () => dispatch(authenticationActions.getUsersAsync());
   const createUser = (user: PostUser) => dispatch(authenticationActions.createUserAsync(user));
   const signIn = (user: Pick<PostUser, 'username' | 'password'>) => {
@@ -39,6 +41,7 @@ const useAuth = () => {
     isAuthenticated,
     signInErrorMessage,
     signInLoading,
+    currentUserData,
     getUsersList,
     createUser,
     signIn,
