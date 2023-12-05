@@ -64,7 +64,6 @@ export const tweetsSlice = createSlice({
         state.allTweetsLoading = LOADING_STATE.LOADING;
       })
       .addCase(tweetsActions.getAllTweetsAsync.fulfilled, (state, action) => {
-        const nextTweetsState = state.allTweets.tweets
         state.allTweets = {
           ...action.payload.data,
           tweets: [

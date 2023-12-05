@@ -21,6 +21,8 @@ export interface Tweet {
   timestamp: string;
   imageUrl: string;
   likes: number;
+  comments: number;
+  reTweets: number;
   user: {
     id: number;
     email: string

@@ -4,15 +4,16 @@ import CommentsIcon from '../../../assets/Icons/CommentsIcon';
 import RetweetIcon from '../../../assets/Icons/RetweetIcon';
 import LikeIcon from '../../../assets/Icons/LikeIcon';
 import Spinner from '../common/Spinner/Spinner';
+import { Tweet } from '../../utils/types';
 
 interface ITweetActions {
-  tweetId: string;
+  tweet: Tweet;
   onReTweetLoading: boolean;
-  onReTweet: (tweetId: string) => void;
+  onReTweet: (tweetId: string | number) => void;
 }
 
 const TweetActions = ({
-  tweetId,
+  tweet,
   onReTweetLoading,
   onReTweet,
 }: ITweetActions) => {
@@ -24,9 +25,9 @@ const TweetActions = ({
           color={'#566370'}
         />
       </TouchableOpacity>
-      <Text style={Styles.label}>0</Text>
+      <Text style={Styles.label}>{tweet.comments}</Text>
       <TouchableOpacity
-        onPress={() => onReTweet(tweetId)}
+        onPress={() => onReTweet(tweet.id)}
         disabled={onReTweetLoading}
       >
         {onReTweetLoading
@@ -38,14 +39,14 @@ const TweetActions = ({
             />
           )}
       </TouchableOpacity>
-      <Text style={Styles.label}>0</Text>
+      <Text style={Styles.label}>{tweet.reTweets}</Text>
       <TouchableOpacity>
         <LikeIcon
           size={16}
           color={'#566370'}
         />
       </TouchableOpacity>
-      <Text style={Styles.label}>0</Text>
+      <Text style={Styles.label}>{tweet.likes}</Text>
     </View>
   )
 }

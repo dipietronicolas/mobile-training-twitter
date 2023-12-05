@@ -17,9 +17,9 @@ const TweetComponent = ({
 
   const [areTweetActionsLoading, setAreTweetActionsLoading] = React.useState(false);
 
-  const handleOnReTweet = (tweetId: string) => {
+  const handleOnReTweet = (tweetId: string | number) => {
     setAreTweetActionsLoading(true);
-    onReTweet(tweetId);
+    onReTweet(`${tweetId}`);
   }
 
   React.useEffect(() => {
@@ -56,7 +56,7 @@ const TweetComponent = ({
         )}
         <View style={Styles.tweetActionsContainer}>
           <TweetActions
-            tweetId={tweet.id.toString()}
+            tweet={tweet}
             onReTweetLoading={onReTweetLoading && areTweetActionsLoading}
             onReTweet={handleOnReTweet}
           />

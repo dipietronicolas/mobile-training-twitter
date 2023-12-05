@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LOADING_STATE } from '../../utils/constants';
+import { LOADING_STATE, SECURE_STORE_KEYS } from '../../utils/constants';
 import { LoadingState } from '../../utils/types';
 import {
   getUsersAsync,
   createUserAsync,
   singInAsync,
 } from './authentication.actions';
+import appUtils from '../../utils/utils';
 
 export interface AuthenticationState {
   isAuthenticated: boolean;
@@ -44,6 +45,7 @@ export const authenticationSlice = createSlice({
     },
     logout: (state) => {
       state.isAuthenticated = false;
+      appUtils.removeFromSecureStore(SECURE_STORE_KEYS.CURRENT_USER_DATA)
     },
     setCurrentUserData: (state, action) => {
       state.currentUserData = action.payload;

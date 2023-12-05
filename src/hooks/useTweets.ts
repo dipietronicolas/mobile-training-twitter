@@ -14,7 +14,7 @@ const useTweets = () => {
 
   const getAllTweets = (page = 1) => dispatch(tweetsActions.getAllTweetsAsync(page))
   const getForYouTweets = (page = 1) => dispatch(tweetsActions.getForYouTweetsAsync(page));
-  const reTweet = (tweetId: string) => dispatch(tweetsActions.postReTweetAsync(tweetId));
+  const reTweet = (tweetId: string) => dispatch(tweetsActions.postReTweetAsync(`${tweetId}`));
 
   return {
     allTweets,
